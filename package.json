@@ -1,0 +1,24 @@
+{
+  "name": "NodeBasics",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dbConnection.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RichaBijalwan/NodeBasics.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/RichaBijalwan/NodeBasics/issues"
+  },
+  "homepage": "https://github.com/RichaBijalwan/NodeBasics#readme",
+  "dependencies": {
+    "mysql": "^2.15.0"
+  }
+}
