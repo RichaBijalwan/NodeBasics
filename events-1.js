@@ -13,3 +13,9 @@ eventEmitter.on('data_received', function() {
 });
 
 eventEmitter.emit('connection');
+
+console()
+
+setTimeout(() => {
+    console() 
+}, 0);

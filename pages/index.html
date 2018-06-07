@@ -5,7 +5,13 @@
 <body>
     <div>
         <h3>Create User</h3>
-        <input type="email" placeholder="enter email ID"/>
-        <input type="password" placeholder="enter password"/>
+        <form method="POST" action="http://localhost:8081/api/resister">
+            <input id="test-emailID" name="email" type="email" placeholder="enter email ID" value="abc@gmail.com"/>
+            <input id="test-password" name="password" type="password" placeholder="enter password" value="1234"/>
+            <input type="submit" value="Resister"/>
+        </form>
+        
     </div>
+
+    
 </body>

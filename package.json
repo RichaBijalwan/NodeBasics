@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/RichaBijalwan/NodeBasics#readme",
   "dependencies": {
-    "mysql": "^2.15.0"
+    "mysql": "^2.15.0",
+    "request": "^2.87.0"
   }
 }
