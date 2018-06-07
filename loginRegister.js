@@ -2,6 +2,7 @@
 const _http = require('http');
 const _url = require('url');
 const _fs = require('fs');
+const _qs = require('querystring');
 const mysql = require('mysql');
 
 var dbCon = mysql.createConnection ({
@@ -93,11 +94,12 @@ let routes = {
 		'/api/login': (req, res) => {
 			let body = '';
 			req.on('data', data => {
-				body += data;
+				body += data.toString();
 			});
 
 			req.on('end', () => {
-        isUserExists(body.email, String(body.password))
+        var params = _qs.parse(body);
+        isUserExists(params.email, String(params.password))
         .then((result) => {
           if(result.toString() != ''){
             res.writeHead(301, {Location: "http://localhost:8081/home.html"});
@@ -117,14 +119,13 @@ let routes = {
     '/api/resister': (req, res) => {
 			let body = '';
 			req.on('data', data => {
-				body += data;
+				body += data.toString();
 			});
 
 			req.on('end', () => {
-        addUser(body.email, String(body.password))
-        .then((result) => {
-          res.end('You are registered !');
-        })
+        var params = _qs.parse(body);
+        addUser(params.email, String(params.password))
+        .then(res.end('You are registered !'))
         .catch((res) => {
           console.log("error  : "+res);
         });;
