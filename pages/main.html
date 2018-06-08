@@ -1,0 +1,32 @@
+<!doctype>
+<head>
+    <title>Main Page</title>
+</head>
+<body>
+    <div>
+        <h3>Request User</h3>
+        <input id="test-emailID" name="email" type="email" placeholder="enter email ID" value="abc@gmail.com"/>
+        <input id="test-password" name="password" type="password" placeholder="enter password" value="1234"/>
+        <input type="submit" value="Request" onclick="submitForm()"/>
+</div>
+    <script>
+        function submitForm() {
+            var _email = document.getElementById("test-emailID").value,
+            _pw = document.getElementById("test-password").value,
+            _data = {
+                "email": _email,
+                "password": _pw
+            },
+            xhttp =  new XMLHttpRequest();
+            xhttp.onreadystatechange = function(){
+                if (this.readyState == 4 && this.status == 200){
+                    console.log(xhttp.responseText);
+                }
+            }
+
+            xhttp.open("POST", "http://localhost:8081/api/login", true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.send( JSON.stringify(_data));
+        }
+    </script>
+</body>

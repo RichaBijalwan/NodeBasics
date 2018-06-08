@@ -6,7 +6,9 @@ let routes = {
 	'GET': {
 		'/': (req, res) => {
 			res.writeHead(200, {'Content-type': 'text/html'});
-			res.end('<h1>Hello Router</h1>');
+			res.end(`<h1>Hello Router</h1>
+			<a href="/about"> About Page</a> <br />
+			<a href="/api/getinfo?event=nodejs&company=AKQA"> Get Info Page</a>`);
 		},
 		'/about': (req, res) => {
 			res.writeHead(200, {'Content-type': 'text/html'});

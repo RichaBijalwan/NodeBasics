@@ -22,8 +22,8 @@ function openPage(path, res){
 
 let routes = {
 	'GET': {
-		'/index.html': (req, res) => {
-			openPage('/index.html', res);
+		'/main.html': (req, res) => {
+			openPage('/main.html', res);
 		},
 		'/home.html': (req, res) => {
 			openPage('/home.html', res);
@@ -39,9 +39,9 @@ let routes = {
 
 			req.on('end', () => {
 				var params = JSON.parse(body);
-				console.log('Username: ', params['email']);
+				console.log('Email: ', params['email']);
 				console.log('Password: ', params['password']);
-				res.end();
+				res.end("Request Successfull !");
 			});
 		}
 	},
