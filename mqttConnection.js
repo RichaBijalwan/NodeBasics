@@ -1,5 +1,5 @@
 var mqtt = require('mqtt');
-var mqttClient = mqtt.connect('mqtt://localhost:1883'); //TODO change the host name
+var mqttClient = mqtt.connect('mqtt://localhost:1883'); //TODO change the host name where to set
 
 mqttClient.on('connect', () => {  
   console.log('connected');

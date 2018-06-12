@@ -25,7 +25,6 @@ function createTable () {
     dbCon.query( sql, ( err, result ) => {
         if ( err )
             return reject( err );
-        console.log(result);
         resolve( result );
     } );
   } );
@@ -37,7 +36,6 @@ function insertRows () {
     dbCon.query( sql, ( err, result ) => {
         if ( err )
             return reject( err );
-        console.log(result);
         resolve( result );
     } );
   } );
@@ -49,7 +47,6 @@ function selectRows () {
     dbCon.query( sql, ( err, result ) => {
         if ( err )
             return reject( err );
-        console.log(result);
         resolve( result );
     } );
   } );

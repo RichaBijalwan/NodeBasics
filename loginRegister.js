@@ -3,63 +3,7 @@ const _http = require('http');
 const _url = require('url');
 const _fs = require('fs');
 const _qs = require('querystring');
-const mysql = require('mysql');
-
-var dbCon = mysql.createConnection ({
-  host: "localhost",
-  user: "root",
-  password: "12345",
-  database: "testdb"
-});
-
-function createUserTable () {
-  let sql = "CREATE TABLE users (email VARCHAR(255), password VARCHAR(255), passport VARCHAR(255))";
-  dbCon.query( sql, ( err, result ) => {
-      if ( err )
-        return false;
-      return true;
-  } );
-}
-
-function isUserDataExists () {
-  let sql = "SELECT * FROM users";
-  dbCon.query( sql, ( err, result ) => {
-      if ( err )
-        createUserTable();
-      return true;
-  } );
-}
-
-function generateTokan(str) {
-  return Buffer.from(str).toString('base64');
-}
-
-function isUserExists(email, password) {
-  let isUser, token = generateTokan(email+password),
-      sql = `SELECT * FROM users WHERE passport = '${token}'`;
-  console.log("login : "+token);
-  return new Promise( ( resolve, reject ) => {
-    dbCon.query( sql, ( err, result ) => {
-        if ( err )
-            return reject( err );
-        console.log("check : "+result);
-        resolve( result );
-    } );
-  } );
-}
-
-function addUser(email, password) {
-  let token = generateTokan(email+password);
-  let sql = `INSERT INTO users (email, password, passport) VALUES ('${email}', '${password}', '${token}')`;
-  console.log("add : "+token);
-  return new Promise( ( resolve, reject ) => {
-    dbCon.query( sql, ( err, result ) => {
-        if ( err )
-            return reject( err );
-        resolve( result );
-    } );
-  } );
-}
+const _db = require('./userDb');
 
 function openPage(path, res){
 	let uripath = 'pages/'+path;
@@ -99,7 +43,7 @@ let routes = {
 
 			req.on('end', () => {
         var params = _qs.parse(body);
-        isUserExists(params.email, String(params.password))
+        _db.isUserExists(params.email, String(params.password))
         .then((result) => {
           if(result.toString() != ''){
             res.writeHead(301, {Location: "http://localhost:8081/home.html"});
@@ -124,7 +68,7 @@ let routes = {
 
 			req.on('end', () => {
         var params = _qs.parse(body);
-        addUser(params.email, String(params.password))
+        _db.addUser(params.email, String(params.password))
         .then(res.end('You are registered !'))
         .catch((res) => {
           console.log("error  : "+res);
@@ -140,10 +84,9 @@ let routes = {
 }
 
 function router(req, res) {
-  isUserDataExists();
+  _db.isUserDataExists();
 
 	let baseURI = _url.parse(req.url, true);
-  console.log(req.url, baseURI.pathname);
   
   let resolveRoute = routes[req.method][baseURI.pathname];
   

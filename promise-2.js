@@ -31,15 +31,15 @@ function main() {
     var dataPromise = getData(userProfileURL);
     // Get user details after that get followers from URL
     dataPromise.then(JSON.parse, errHandler)
-               .then(function(result) {
-                    userDetails = result;
-                    // Do one more async operation here
-                    var anotherPromise = getData(userDetails.followers_url).then(JSON.parse);
-                    return anotherPromise;
-                }, errHandler)
-                .then(function(data) {
-                    console.log(data)
-                }, errHandler);
+        .then(function(result) {
+            userDetails = result;
+            // Do one more async operation here
+            var anotherPromise = getData(userDetails.followers_url).then(JSON.parse);
+            return anotherPromise;
+        }, errHandler)
+        .then(function(data) {
+            console.log(data)
+        }, errHandler);
 }
 
 
