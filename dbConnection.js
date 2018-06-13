@@ -1,3 +1,4 @@
+// includes mysql module
 var mysql = require('mysql');
 
 var dbCon = mysql.createConnection ({
@@ -7,6 +8,7 @@ var dbCon = mysql.createConnection ({
   database: "testdb"
 });
 
+// CREATE DATABASE
 /*function createDb () {
   let sql = "CREATE DATABASE testdb";
   return new Promise( ( resolve, reject ) => {
@@ -19,6 +21,7 @@ var dbCon = mysql.createConnection ({
   } );
 }*/
 
+// CREATE TABLE
 function createTable () {
   let sql = "CREATE TABLE employee (name VARCHAR(255), id VARCHAR(255))";
   return new Promise( ( resolve, reject ) => {
@@ -30,6 +33,7 @@ function createTable () {
   } );
 }
 
+// INSERT ROWS
 function insertRows () {
   let sql = "INSERT INTO employee (name, id) VALUES ('New Emplyee', '123456')";
   return new Promise( ( resolve, reject ) => {
@@ -41,6 +45,7 @@ function insertRows () {
   } );
 }
 
+// SELECT DATA
 function selectRows () {
   let sql = "SELECT * FROM employee";
   return new Promise( ( resolve, reject ) => {
@@ -52,6 +57,7 @@ function selectRows () {
   } );
 }
 
+// Run all DB Commands in sequence
 dbCon.connect(function(err) {
   if (err) throw err;
 
