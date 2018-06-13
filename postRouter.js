@@ -7,6 +7,7 @@ var _fs = require('fs');
 function openPage(path, res){
 	let uripath = 'pages/'+path;
 
+	// we can use stream instead on readfile to read file in chunks
 	_fs.readFile(uripath, function(err, data){
 		if(err){
 				res.statusCode = 404;
@@ -33,6 +34,7 @@ let routes = {
 	'POST': {
 		'/api/login': (req, res) => {
 			let body = '';
+			// read data in chunks
 			req.on('data', data => {
 				body += data;
 			});
@@ -53,7 +55,6 @@ let routes = {
 
 function router(req, res) {
 	let baseURI = _url.parse(req.url, true);
-	console.log(req.url, baseURI.pathname);
 	let resolveRoute = routes[req.method][baseURI.pathname];
 	if(resolveRoute != undefined) {
 		req.queryParams = baseURI.query;

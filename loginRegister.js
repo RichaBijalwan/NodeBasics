@@ -3,6 +3,8 @@ const _http = require('http');
 const _url = require('url');
 const _fs = require('fs');
 const _qs = require('querystring');
+
+// custom module to save and read user data.
 const _db = require('./userDb');
 
 function openPage(path, res){
@@ -42,10 +44,13 @@ let routes = {
 			});
 
 			req.on('end', () => {
+        // we use query string parse function here to read form data.
         var params = _qs.parse(body);
+        // velidates/checks the user in DB and redirects to home page.
         _db.isUserExists(params.email, String(params.password))
         .then((result) => {
           if(result.toString() != ''){
+            // to redirect to home page.
             res.writeHead(301, {Location: "http://localhost:8081/home.html"});
             res.end();
           }else{
@@ -68,6 +73,7 @@ let routes = {
 
 			req.on('end', () => {
         var params = _qs.parse(body);
+        // adds user to DB (here to add extra conditions or velidations)
         _db.addUser(params.email, String(params.password))
         .then(res.end('You are registered !'))
         .catch((res) => {
@@ -84,6 +90,7 @@ let routes = {
 }
 
 function router(req, res) {
+  // checks if user table exists if not then creates one.
   _db.isUserDataExists();
 
 	let baseURI = _url.parse(req.url, true);

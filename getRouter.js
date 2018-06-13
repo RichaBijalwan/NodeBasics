@@ -2,6 +2,7 @@
 const http = require('http');
 const url = require('url');
 
+// Route Object
 let routes = {
 	'GET': {
 		'/': (req, res) => {
@@ -26,13 +27,19 @@ let routes = {
 	}
 }
 
+// Route Function to handle the request
 function router(req, res) {
 	console.log(req.url, req.method);
+	// url parse method parse the request url in object
+	// it provieds path and queury paremeters through more readable object
 	let baseURI = url.parse(req.url, true);
 	console.log(baseURI);
+	// chaches the callback from route object respective to method and path
 	let resolveRoute = routes[req.method][baseURI.pathname];
 	if(resolveRoute != undefined) {
+		// adding query parameters to request object.
 		req.queryParams = baseURI.query;
+		// invokes route call back
 		resolveRoute(req, res);
 	} else {
 		routes['NA'](req, res);
